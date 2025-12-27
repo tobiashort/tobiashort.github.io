@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My GPG Public Key</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          max-width: 800px; margin: 2rem auto;
+          line-height: 1.6;
+        }
+
+        pre {
+          background:#f4f4f4;
+          padding:1rem;
+          overflow:auto;
+        }
+
+        .qr {
+          text-align:center;
+          margin-top:2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>My GPG Public Key</h1>
+    <p>Copy the key below or download the <a href="https://raw.githubusercontent.com/tobiashort/gpg/refs/heads/main/public-key.asc">ASCII‑armored file</a>.</p>
+
+    <pre id="key-block"></pre>
+
+    <div class="qr">
+        <p>Scan to import:</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://raw.githubusercontent.com/tobiashort/gpg/refs/heads/main/public-key.asc" alt="QR code">
+    </div>
+
+    <script>
+        fetch('https://raw.githubusercontent.com/tobiashort/gpg/refs/heads/main/public-key.asc')
+            .then(r => r.text())
+            .then(text => document.getElementById('key-block').textContent = text);
+    </script>
+</body>
+</html>
