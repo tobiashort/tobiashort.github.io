@@ -3,41 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GPG Public Key</title>
+    <title>tobiashort</title>
     <style>
         body {
           font-family: Arial, sans-serif;
-          max-width: 800px; margin: 2rem auto;
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 2rem;
           line-height: 1.6;
         }
 
-        pre {
-          background:#f4f4f4;
-          padding:1rem;
-          overflow:auto;
+        h1 {
+            margin: 0;            
         }
 
-        .qr {
-          text-align:center;
-          margin-top:2rem;
+        pre {
+          background: #f4f4f4;
+          padding: 1rem;
+          overflow: auto;
+          max-height: 600px;
+          margin: 0;
+          margin-top: 2rem;
+          border: solid 1px #e4e4e4;
+        }
+
+        button {
+          background: #f4f4f4;
+          padding: 0.5rem 1rem;
+          border-radius: 0.25rem;
+          border: solid 1px #e4e4e4;
+          color: inherit;
+          cursor: pointer;
+          margin-top: 1rem;
+
+          &:active {
+            background: #f0f0f0;
+          }
         }
     </style>
 </head>
 <body>
     <h1>My GPG Public Key</h1>
-    <p>Copy the key below or download the <a href="https://raw.githubusercontent.com/tobiashort/gpg/refs/heads/main/public-key.asc">ASCII‑armored file</a>.</p>
 
-    <pre id="key-block"></pre>
+    <pre></pre>
 
-    <div class="qr">
-        <p>Scan to import:</p>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://raw.githubusercontent.com/tobiashort/gpg/refs/heads/main/public-key.asc" alt="QR code">
-    </div>
+    <button onclick="copy()">Copy</button>
 
     <script>
-        fetch('https://raw.githubusercontent.com/tobiashort/gpg/refs/heads/main/public-key.asc')
-            .then(r => r.text())
-            .then(text => document.getElementById('key-block').textContent = text);
+        (async function() {
+            try {
+                const res = await fetch("https://raw.githubusercontent.com/tobiashort/gpg/refs/heads/main/public-key.asc");
+                const text = await res.text();
+                document.querySelector("pre").textContent = text;
+            } catch (err) {
+                console.error(err);
+            }
+        })();
+
+        function copy() {
+            const elem = document.querySelector("pre");
+            navigator.clipboard.writeText(elem.textContent);
+        }
     </script>
 </body>
 </html>
